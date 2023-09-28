@@ -46,6 +46,6 @@ Distributed under the MIT License. See LICENSE for more information.
 
 
 ## TODO
-[X] Basic Functionality
-[] Choice of API
-[] Choice of Indexes
+- [x] Basic Functionality
+- [ ] Choice of API
+- [ ] Choice of Indexes
