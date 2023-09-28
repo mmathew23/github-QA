@@ -1,0 +1,8 @@
+python-dotenv
+fire
+llama-hub
+llama-index
+httpx
+llama-cpp-python
+transformers
+torch
