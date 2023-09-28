@@ -28,12 +28,21 @@ The GitHub Q&A Chatbot is designed to assist users in understanding the content,
 git clone git@github.com:mmathew23/github-QA.git
 ```
 
+2. Change directory
 ```bash
 cd github-QA
 ```
+
+3. Install requirements
 ```bash
 pip install -r requirements.txt
 ```
+
+4. Edit .env file
+```bash
+mv .env.template .env
+```
+Add your Github token and OpenAI API keys. If not using OpenAI model will default to llama cpp.
 
 ## Usage
 
