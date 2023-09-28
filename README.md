@@ -47,5 +47,6 @@ Distributed under the MIT License. See LICENSE for more information.
 
 ## TODO
 - [x] Basic Functionality
+- [ ] Add Github Discussions
 - [ ] Choice of API
 - [ ] Choice of Indexes
