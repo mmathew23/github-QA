@@ -47,7 +47,7 @@ Add your Github token and OpenAI API keys. If not using OpenAI model will defaul
 ## Usage
 
 ```python
-python qa.py
+python qa.py --owner GITHUB_OWNER --repo_name REPO_NAME
 ```
 
 ## License
