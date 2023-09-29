@@ -46,9 +46,23 @@ def main(
         concurrent_requests=concurrent_requests,
     )
     if branch is not None:
-        repo_docs = loader.load_data(branch=branch)
+        for attempt in range(2):  # fallback to master branch if needed
+            try:
+                repo_docs = loader.load_data(branch=branch)
+            except Exception as e:
+                if branch == 'main':
+                    print(f"Failed to load data from branch {branch}. Trying master")
+                    branch = 'master'
+                    continue
+                else:
+                    print(f"Failed to load data from branch {branch}.")
+                    raise e
     else:
-        repo_docs = loader.load_data(commit_sha=commit_sha)
+        try:
+            repo_docs = loader.load_data(commit_sha=commit_sha)
+        except Exception as e:
+            print(f"Failed to load data from commit {commit_sha}.")
+            raise e
     repo_index = VectorStoreIndex.from_documents(repo_docs)
     repo_query_engine = repo_index.as_query_engine(use_async=True)
     repo_tool = QueryEngineTool.from_defaults(
