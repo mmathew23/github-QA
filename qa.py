@@ -2,10 +2,12 @@ import dotenv
 import os
 import fire
 from typing import Optional
-from llama_index import VectorStoreIndex
+from llama_index import VectorStoreIndex, ServiceContext
 from llama_index.tools.query_engine import QueryEngineTool
 from llama_index.objects import ObjectIndex, SimpleToolNodeMapping
 from llama_index.query_engine import ToolRetrieverRouterQueryEngine
+from llama_index.llms import OpenAI
+from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_hub.github_repo import GithubRepositoryReader, GithubClient
 from llama_hub.github_repo_issues import GitHubRepositoryIssuesReader, GitHubIssuesClient
 
@@ -88,7 +90,13 @@ def main(
     # Setup tools and router retrieval
     tool_mapping = SimpleToolNodeMapping.from_objects([repo_tool, issue_tool])
     object_index = ObjectIndex.from_objects([repo_tool, issue_tool], tool_mapping, VectorStoreIndex)
-    query_engine = ToolRetrieverRouterQueryEngine(object_index.as_retriever())
+    llm = OpenAI(model)
+    embedding = OpenAIEmbedding()
+    service_context = ServiceContext.from_defaults(llm=llm, embed_model=embedding, chunk_size=4096)
+    query_engine = ToolRetrieverRouterQueryEngine(
+        object_index.as_retriever(),
+        service_context=service_context,
+    )
 
     base_input_query = f"Ask a question about {owner}/{repo_name} on "
     if branch is None:
