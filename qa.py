@@ -42,7 +42,6 @@ def main(
         github_client,
         owner=owner,
         repo=repo_name,
-        filter_directories=(["gpt_index", "docs"], GithubRepositoryReader.FilterType.INCLUDE),
         filter_file_extensions=(include_file_extensions, GithubRepositoryReader.FilterType.INCLUDE),
         verbose=verbose,
         concurrent_requests=concurrent_requests,
